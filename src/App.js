@@ -70,11 +70,11 @@ import QuizInstructions from './Student/components/Quizinstructions';
 import Play from './Student/components/Play';
 import QuizSummary from './Student/components/QuizSummary';
 
-import ProtectedRoute from "./ProtectedRoutes";
-import ProtectedRouteAdmin from "./ProtectedRoutesAdmin";
-import ProtectedRouteTeacher from "./ProtectedRoutesTeacher"
-import ProtectedRouteStudent from "./ProtectedRoutesStudent"
-import ProtectedRouteLogin from "./ProtectedRoutesLogin"
+import ProtectedRoute from "./Routes/ProtectedRoutes";
+import ProtectedRouteAdmin from "./Routes/ProtectedRoutesAdmin";
+import ProtectedRouteTeacher from "./Routes/ProtectedRoutesTeacher"
+import ProtectedRouteStudent from "./Routes/ProtectedRoutesStudent"
+import ProtectedRouteLogin from "./Routes/ProtectedRoutesLogin"
 
 function App() {
   let history= useHistory();

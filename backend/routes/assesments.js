@@ -53,24 +53,51 @@ router.route('/exam').get((req, res) => {
 
 });
 
-router.route('/quizquestions').get((req, res) => {
-  Assesment.find({ assesmenttype: 'quiz',_id:req.id })
-    .then(assesments => {
-      var result = [];
-      for (var a in assesments) {
-        for (var q in a.questions) {
-          var ques=q.question;
-          var ans;
-          for (var op in q.options) {
-          
-            if (op.isAnswer){
-              ans=op.value;
-            }
+router.route('/quizquestions').post((req, res) => {
+  Assesment.findOne({ assesmenttype: 'quiz',_id:req.body.id })
+    .then(assesment => {
+      var ques = [];
+      Array.prototype.forEach.call(assesment.questions, obj => {
+        console.log(obj);
+        var i=0;
+        var j;
+        for(j=0;j<4;j++)
+        {
+          if(obj.options[j].isAnswer)
+          {
+            i=j;
           }
         }
-      }
+        var q={
+          "question":obj.question,
+          "optionA":obj.options[0].value,
+          "optionB":obj.options[1].value,
+          "optionC":obj.options[2].value,
+          "optionD":obj.options[3].value,
+          "answer": obj.options[i].value
+        };
+        ques.push(q);
+      });
+      res.json(ques);
     })
     .catch(err => res.status(400).json('Error: ' + err));
 
 });
 module.exports = router;
+
+
+/*{
+  "question": "What temperature does water boil at?",
+  "optionA": "50 degrees Celcius",
+  "optionB": "25 degrees Celcius",
+  "optionC": "100 degrees Celcius",
+  "optionD": "150 degrees Celcius",
+  "answer": "100 degrees Celcius"
+},*/
+
+/*answer: "EDIC"
+optionA: "EBCDIC"
+optionB: "BCD"
+optionC: "ASCII"
+optionD: "EDIC"
+question: "Which of the following is not a type of computer code?"*/

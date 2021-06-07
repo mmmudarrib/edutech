@@ -2,8 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Helmet } from 'react-helmet';
 import M from 'materialize-css';
 import classnames from 'classnames';
-import Axios from 'axios'
-import questions from '../questions.json';
+import Axios from 'axios';
 import isEmpty from '../utils/is-empty';
 
 import correctNotification from '../assets/audio/correct-answer.mp3';
@@ -19,7 +18,7 @@ class Play extends Component {
         super(props);
         this.state = {
 
-            questions,
+            questions:[],
             currentQuestion: {},
             nextQuestion: {},
             previousQuestion: {},
@@ -44,13 +43,14 @@ class Play extends Component {
         this.correctSound = React.createRef();
         this.wrongSound = React.createRef();
         this.buttonSound = React.createRef();
-        //this.getquestions();
+        this.getquestions();
     }
     getquestions(){
-        Axios.post('http://localhost:5000/assesments/quizquestions', {id:this.state.id})
+        Axios.post('http://localhost:5000/assesment/quizquestions', {id:this.state.id})
         .then(data => {
             if (data.status == 200) {
-                this.state.questions=data;
+                console.log(data.data);
+                this.state.questions=data.data;
             }
                 })
                 .catch(err => {
@@ -87,6 +87,7 @@ class Play extends Component {
                 this.handleDisableButton();
             });
         }
+        console.log(currentQuestion);
     };
 
     handleOptionClick = (e) => {
